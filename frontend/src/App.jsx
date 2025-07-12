@@ -30,7 +30,7 @@ const App = () => {
 
 <Routes>
    <Route path="/dashboard" element={<ProtectedUserroutes children={<Dashboard />}/> } />
-   <Route path="/mycourses" element={<Mycourses />} />
+   <Route path="/mycourses" element={<ProtectedUserroutes children={<Mycourses />}/>} />
 </Routes>
 
 </>
