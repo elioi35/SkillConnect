@@ -8,6 +8,7 @@ import Mycourses from './pages/private/Mycourses';
 import Mentors from './pages/public/Mentors';
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
+import ProtectedUserroutes from './protected/ProtectedUserroutes';
 
 
 
@@ -28,7 +29,7 @@ const App = () => {
 
 
 <Routes>
-   <Route path="/dashboard" element={ <Dashboard />} />
+   <Route path="/dashboard" element={<ProtectedUserroutes children={<Dashboard />}/> } />
    <Route path="/mycourses" element={<Mycourses />} />
 </Routes>
 

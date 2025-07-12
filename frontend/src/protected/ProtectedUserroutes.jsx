@@ -8,8 +8,8 @@ const ProtectedUserroutes = ({Children}) => {
                 <div>You dont have acces for this page</div>
             )
         };
-    }
   return <div>{Children}</div>; 
+    }
     
   
 
