@@ -59,7 +59,7 @@ const Register = () => {
             />
           </div>
           <button
-            type="submit" onClick={ handleRegister}
+            type="submit" onClick={ handleRegister }
             className="w-full py-3 rounded-lg bg-[#8B1C2B] text-white font-bold text-lg border-none cursor-pointer transition-all hover:scale-105 shadow-lg"
           >
             Register

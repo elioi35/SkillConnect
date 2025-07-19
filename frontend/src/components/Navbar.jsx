@@ -22,19 +22,15 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-6">
             <Link
               to="/"
-              className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150">
+              className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
+            >
               Home
             </Link>
             <Link
               to="/about"
-              className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"   >
-              About
-            </Link>
-            <Link
-              to="/dashboard"
               className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
             >
-              Dashboard
+              About
             </Link>
             <Link
               to="/mentors"
@@ -42,24 +38,52 @@ const Navbar = () => {
             >
               Mentors
             </Link>
-            <Link
-              to="/mycourses"
-              className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
-            >
-              MyCourses
-            </Link>
-            <Link
-              to="/login"
-              className="text-black font-medium px-3 py-2 rounded bg-white  transition duration-150"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="text-black font-medium px-3 py-2 rounded bg-white  transition duration-150"
-            >
-              Register
-            </Link>
+            {localStorage.getItem("token") ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/profile"
+                  className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/logout"
+                  className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    window.location.href = "/";
+                  }}
+                >
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
+            {!localStorage.getItem("token") ? (
+              <>
+                <Link
+                  to="/login"
+                  className="text-black font-medium px-3 py-2 rounded bg-white  transition duration-150"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-black font-medium px-3 py-2 rounded bg-white  transition duration-150"
+                >
+                  Register
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="md:hidden">
             <button
@@ -77,9 +101,7 @@ const Navbar = () => {
                   strokeLinejoin="round"
                   strokeWidth={2}
                   d={
-                    isOpen
-                      ? "M6 18L18 6M6 6l12 12"
-                      : "M4 6h16M4 12h16M4 18h16"
+                    isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
                   }
                 />
               </svg>
