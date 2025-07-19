@@ -12,7 +12,7 @@ const authRoutes = require('./controllers/auth');
 // middleware
  app.use(cors());
  app.use(express.json());
- app.use('', authRoutes);
+ app.use('/auth', authRoutes);
 
 
 
