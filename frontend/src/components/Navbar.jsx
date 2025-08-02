@@ -1,9 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import axios from "axios";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    mentor: "",
+    mentorPhoto: "",
+    category: "",
+  });
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      if (localStorage.getItem("token")) {
+        try {
+          const res = await axios.get("http://localhost:3000/protected/me", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          setRole(res.data.role);
+        } catch (err) {
+          setRole("");
+        }
+      }
+    };
+    fetchRole();
+  }, []);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:3000/courses", form, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      alert("Course created!");
+      setShowForm(false);
+      setForm({
+        title: "",
+        description: "",
+        mentor: "",
+        mentorPhoto: "",
+        category: "",
+      });
+    } catch (err) {
+      alert("Error creating course");
+    }
+  };
 
   return (
     <nav className="bg-[#8B1C2B] h-22 shadow-lg relative">
@@ -26,7 +80,6 @@ const Navbar = () => {
             >
               Home
             </Link>
-       
             <Link
               to="/mentors"
               className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
@@ -41,7 +94,6 @@ const Navbar = () => {
                 >
                   Dashboard
                 </Link>
-            
                 <Link
                   to="/logout"
                   className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
@@ -52,28 +104,101 @@ const Navbar = () => {
                 >
                   Logout
                 </Link>
+                {role === "Admin" && (
+                  <button
+                    className="bg-white text-[#8B1C2B] px-4 py-2 rounded-lg font-medium shadow-md hover:bg-gray-200 hover:cursor-pointer"
+                    onClick={() => setShowForm(true)}
+                  >
+                    + Create a New Course
+                  </button>
+                )}
+                {showForm && (
+                  <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                    <form
+                      onSubmit={handleSubmit}
+                      className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-4"
+                    >
+                      <h3 className="text-xl hover:cursor-pointer font-bold mb-4 text-[#8B1C2B]">Add New Course</h3>
+                      <input
+                        name="title"
+                        type="text"
+                        placeholder="Course Title"
+                        value={form.title}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded"
+                      />
+                      <input
+                        name="mentor"
+                        type="text"
+                        placeholder="Mentor Name"
+                        value={form.mentor}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded"
+                      />
+                      <input
+                        name="mentorPhoto"
+                        type="text"
+                        placeholder="Mentor Photo URL"
+                        value={form.mentorPhoto}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded"
+                      />
+                      <input
+                        name="category"
+                        type="text"
+                        placeholder="Category"
+                        value={form.category}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded"
+                      />
+                      <textarea
+                        name="description"
+                        placeholder="Course Description"
+                        value={form.description}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded"
+                      />
+                      <div className="flex gap-4 mt-4">
+                        <button
+                          type="submit"
+                          className="bg-[#8B1C2B] hover:cursor-pointer text-white px-4 py-2 rounded font-bold"
+                        >
+                          Create
+                        </button>
+                        <button
+                          type="button"
+                          className="bg-gray-300 hover:cursor-pointer px-4 py-2 rounded"
+                          onClick={() => setShowForm(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
               </>
-            ) : (
-              <></>
-            )}
+            ) : null}
             {!localStorage.getItem("token") ? (
               <>
                 <Link
                   to="/login"
-                  className="text-black font-medium px-3 py-2 rounded bg-white  transition duration-150"
+                  className="text-black font-medium px-3 py-2 rounded bg-white transition duration-150"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="text-black font-medium px-3 py-2 rounded bg-white  transition duration-150"
+                  className="text-black font-medium px-3 py-2 rounded bg-white transition duration-150"
                 >
                   Register
                 </Link>
               </>
-            ) : (
-              <></>
-            )}
+            ) : null}
           </div>
           <div className="md:hidden">
             <button
@@ -108,7 +233,6 @@ const Navbar = () => {
           >
             Home
           </Link>
-  
           <Link
             to="/dashboard"
             className="block text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
@@ -123,7 +247,6 @@ const Navbar = () => {
           >
             Mentors
           </Link>
-         
           <Link
             to="/login"
             className="block text-black font-medium px-3 py-2 rounded bg-white transition duration-150"

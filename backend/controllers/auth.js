@@ -24,21 +24,18 @@ router.post('/register', async(req, res) => {
 
 
     //Log in
+router.post('/login', async(req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-    router.post('/login', async(req, res) => {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email});
+    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
 
-        if (!user) return res.status(401).json({ error: 'Invalid email or password'});
+    const isMatch = await bcrypt.compare(password, user.password);
 
-        const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ error: 'Invalid email or password' });
 
-        if (!isMatch) return res.status(401).json({  error: 'Invalid email or password' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+});
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h'});
-        res.json({ token });
-        }
-
-       
-)
- module.exports = router;
+module.exports = router;
