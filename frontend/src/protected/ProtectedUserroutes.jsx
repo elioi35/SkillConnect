@@ -1,15 +1,15 @@
-import { Children } from "react";
 
+import React from "react";
 
-const ProtectedUserroutes = ({Children}) => {
+const ProtectedUserroutes = ({children}) => {
     
         if(!localStorage.getItem("token")) {
             return(
                 <div>You dont have acces for this page</div>
             )
-        };
-  return <div>{Children}</div>; 
-    }
+        }
+  return <div>{children}</div>; 
+    };
     
   
 

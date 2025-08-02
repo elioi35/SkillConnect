@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const courses = [
-    // ... (same courses array as before)
     {
         id: 1,
         title: "Full Stack Web Development",
@@ -92,10 +91,10 @@ const CourseCarousel = () => {
         }
         animationRef.current = requestAnimationFrame(animate);
         return () => cancelAnimationFrame(animationRef.current);
-        // eslint-disable-next-line
+        
     }, [visibleCards]);
 
-    // Manual navigation
+   
     const handlePrev = () => {
         setOffset(prev => {
             const totalWidth = (cardWidth + CARD_GAP) * courses.length;
@@ -114,14 +113,12 @@ const CourseCarousel = () => {
         });
     };
 
-    // Calculate current index for dots
     const currentIndex = Math.round(offset / (cardWidth + CARD_GAP)) % courses.length;
 
     return (
         <div className="relative w-full flex flex-col items-center py-12 overflow-hidden">
          
-            {/* Gradient overlays */}
-            <div className="pointer-events-none absolute left-0 top-0 h-full w-24  z-10" />
+]            <div className="pointer-events-none absolute left-0 top-0 h-full w-24  z-10" />
             <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-10" />
             <div className="flex items-center w-full justify-center gap-2 sm:gap-4 relative z-20">
                 <button

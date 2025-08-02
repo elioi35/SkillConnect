@@ -26,12 +26,7 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              to="/about"
-              className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
-            >
-              About
-            </Link>
+       
             <Link
               to="/mentors"
               className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
@@ -46,12 +41,7 @@ const Navbar = () => {
                 >
                   Dashboard
                 </Link>
-                <Link
-                  to="/profile"
-                  className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
-                >
-                  Profile
-                </Link>
+            
                 <Link
                   to="/logout"
                   className="text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
@@ -118,13 +108,7 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <Link
-            to="/about"
-            className="block text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </Link>
+  
           <Link
             to="/dashboard"
             className="block text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
@@ -139,13 +123,7 @@ const Navbar = () => {
           >
             Mentors
           </Link>
-          <Link
-            to="/mycourses"
-            className="block text-white font-medium px-3 py-2 rounded hover:bg-white hover:text-black transition duration-150"
-            onClick={() => setIsOpen(false)}
-          >
-            MyCourses
-          </Link>
+         
           <Link
             to="/login"
             className="block text-black font-medium px-3 py-2 rounded bg-white transition duration-150"
